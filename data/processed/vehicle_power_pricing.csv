@@ -1,0 +1,4 @@
+segment,policies,exposure,claims,claim_frequency,claim_rate_per_100,claim_policy_pct,severity_claims,avg_severity,observed_loss_cost,indicated_pure_premium,relativity
+4-6,389146,210771.2,21358,0.101333,10.133,5.171,15423,2115.92,154.83,214.41,0.94
+7-9,222442,115983.29,11303,0.097454,9.745,4.806,8458,2559.25,186.63,249.41,1.093
+10+,66425,31744.96,3441,0.108395,10.84,4.887,2563,2196.38,177.33,238.08,1.044

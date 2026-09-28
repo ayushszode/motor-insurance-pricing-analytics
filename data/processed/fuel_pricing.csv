@@ -1,0 +1,3 @@
+segment,policies,exposure,claims,claim_frequency,claim_rate_per_100,claim_policy_pct,severity_claims,avg_severity,observed_loss_cost,indicated_pure_premium,relativity
+Diesel,332136,170660.89,16648,0.09755,9.755,4.73,13450,2051.65,161.69,200.14,0.877
+Regular,345877,187838.55,19454,0.103568,10.357,5.306,12994,2486.88,172.03,257.56,1.129
