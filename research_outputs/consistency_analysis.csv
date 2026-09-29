@@ -1,0 +1,3 @@
+status,policies,exposure,frequency_claims,severity_rows
+exact_match,668896,353893.16803051,26443,26443
+frequency_gt_severity,9117,4606.277431667,9659,1

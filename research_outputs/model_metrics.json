@@ -1,0 +1,36 @@
+{
+  "portfolio": {
+    "annual_claim_frequency": 0.10070308464063966,
+    "claims_per_100_policy_years": 10.070308464063967,
+    "matched_average_severity": 2265.5126493722582,
+    "matched_observed_loss_cost": 167.11104370821303,
+    "frequency_x_matched_severity_benchmark": 228.14411208417434
+  },
+  "frequency_poisson": {
+    "test_mean_poisson_deviance": 0.32185198233657125,
+    "test_observed_expected_ratio": 1.0065395832445843,
+    "training_pearson_dispersion": 2.6058223410358234
+  },
+  "frequency_negative_binomial_sensitivity": {
+    "method_of_moments_alpha": 0.8596092258922534,
+    "test_mean_nb_deviance": 0.28520777241172557,
+    "test_observed_expected_ratio": 0.995298423485854
+  },
+  "severity_gamma": {
+    "test_mean_gamma_deviance": 1.884029018581402,
+    "test_mae": 2221.5434176933236,
+    "test_observed_expected_ratio": 0.9893365859386921
+  },
+  "severity_large_loss_sensitivity": {
+    "training_cap_percentile": 0.995,
+    "training_cap_value": 32043.364999999925,
+    "test_mean_gamma_deviance_capped": 1.1899362225243608,
+    "test_observed_expected_ratio_capped": 1.015725282367201
+  },
+  "pure_premium_matched_loss_diagnostic": {
+    "test_observed_matched_loss": 11868103.84,
+    "test_predicted_loss": 15871223.488011157,
+    "test_observed_expected_ratio": 0.7477749808617437,
+    "consistent_subset_observed_expected_ratio": 0.7577454272470511
+  }
+}
