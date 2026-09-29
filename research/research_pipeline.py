@@ -305,6 +305,30 @@ def main() -> None:
         OUT / "frequency_coefficients.csv", index=False
     )
 
+    # Exposure sensitivity: a small number of freMTPL2 records have Exposure > 1.
+    # Standard public examples sometimes cap such observations at one policy-year.
+    # We keep the uncapped data as primary and report the capped result only as sensitivity.
+    train_f_exp_cap = train_f.copy()
+    test_f_exp_cap = test_f.copy()
+    train_f_exp_cap["Exposure"] = train_f_exp_cap["Exposure"].clip(upper=1.0)
+    test_f_exp_cap["Exposure"] = test_f_exp_cap["Exposure"].clip(upper=1.0)
+    freq_exp_cap_model = smf.glm(
+        formula=FREQ_FORMULA,
+        data=train_f_exp_cap,
+        family=sm.families.Poisson(),
+        offset=np.log(train_f_exp_cap["Exposure"].clip(lower=1e-9)),
+    ).fit()
+    exp_cap_pred_count = np.clip(
+        np.asarray(freq_exp_cap_model.predict(
+            test_f_exp_cap,
+            offset=np.log(test_f_exp_cap["Exposure"].clip(lower=1e-9)),
+        )),
+        1e-12,
+        None,
+    )
+    exp_cap_dev = float(mean_poisson_deviance(test_f_exp_cap["ClaimNb"], exp_cap_pred_count))
+    exp_cap_oe = float(test_f_exp_cap["ClaimNb"].sum() / exp_cap_pred_count.sum())
+
     # Method-of-moments NB2 alpha; used only as a sensitivity model.
     mu_train = np.clip(np.asarray(freq_model.fittedvalues), 1e-12, None)
     y_train = train_f["ClaimNb"].to_numpy(dtype=float)
@@ -492,6 +516,12 @@ def main() -> None:
     raw_unmatched_sev = int((~sev["matched_policy"]).sum())
     duplicate_freq_ids = int(freq["IDpol"].duplicated().sum())
     exposure_gt_1 = int(freq["Exposure"].gt(1).sum())
+    claimnb_gt_4 = int(freq["ClaimNb"].gt(4).sum())
+    max_claimnb = float(freq["ClaimNb"].max())
+    severity_gt_200k = int(sev_matched["ClaimAmount"].gt(200000).sum())
+    max_severity = float(sev_matched["ClaimAmount"].max())
+    severity_p99 = float(sev_matched["ClaimAmount"].quantile(0.99))
+    severity_p995 = float(sev_matched["ClaimAmount"].quantile(0.995))
 
     audit = {
         "dataset": "freMTPL2",
@@ -510,6 +540,12 @@ def main() -> None:
         "total_exposure": float(freq["Exposure"].sum()),
         "policies_exposure_gt_1": exposure_gt_1,
         "max_exposure": float(freq["Exposure"].max()),
+        "policies_claimnb_gt_4": claimnb_gt_4,
+        "max_claim_count": max_claimnb,
+        "matched_severity_rows_gt_200000": severity_gt_200k,
+        "max_matched_severity": max_severity,
+        "matched_severity_p99": severity_p99,
+        "matched_severity_p995": severity_p995,
         "train_policy_rows": int(len(train_f)),
         "test_policy_rows": int(len(test_f)),
         "train_severity_rows": int(len(train_s)),
@@ -544,6 +580,11 @@ def main() -> None:
             "test_mean_poisson_deviance": freq_dev,
             "test_observed_expected_ratio": freq_oe,
             "training_pearson_dispersion": dispersion,
+        },
+        "frequency_exposure_cap_sensitivity": {
+            "exposure_cap": 1.0,
+            "test_mean_poisson_deviance": exp_cap_dev,
+            "test_observed_expected_ratio": exp_cap_oe,
         },
         "frequency_negative_binomial_sensitivity": {
             "method_of_moments_alpha": alpha_hat,
@@ -581,6 +622,13 @@ def main() -> None:
             "value": freq_dev,
             "oe_ratio": freq_oe,
             "note": "Primary frequency model",
+        },
+        {
+            "analysis": "Poisson exposure-capped sensitivity",
+            "metric": "mean_poisson_deviance",
+            "value": exp_cap_dev,
+            "oe_ratio": exp_cap_oe,
+            "note": "Exposure capped at 1.0 policy-year; primary analysis remains uncapped",
         },
         {
             "analysis": "Negative Binomial GLM sensitivity",
@@ -636,6 +684,8 @@ Generated automatically from the publication-grade research pipeline.
 - Poisson test mean deviance: **{freq_dev:.6f}**
 - Poisson test O/E: **{freq_oe:.4f}**
 - Poisson training Pearson dispersion: **{dispersion:.4f}**
+- Exposure-capped Poisson test mean deviance: **{exp_cap_dev:.6f}**
+- Exposure-capped Poisson test O/E: **{exp_cap_oe:.4f}**
 - Negative Binomial sensitivity alpha: **{alpha_hat:.6f}**
 - Negative Binomial test mean deviance: **{nb_dev:.6f}**
 - Gamma severity test mean deviance: **{sev_dev:.6f}**
