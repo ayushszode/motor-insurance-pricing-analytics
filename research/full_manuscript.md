@@ -117,7 +117,7 @@ The frequency data include policy identifier, claim count, exposure, area, vehic
 
 The final pipeline retains frequency rows with positive exposure and non-negative claim count and severity rows with positive claim amounts. All 678,013 frequency rows meet the implemented validity rules.
 
-The frequency file contains 36,102 recorded claims. Of 26,639 positive severity rows, 26,444 match a policy identifier in the frequency table and 195 do not. A further 9,117 policies have a frequency claim count greater than the number of matched severity rows.
+The frequency file contains 36,102 recorded claims. Of 26,639 positive severity rows, 26,444 match a policy identifier in the frequency table and 195 do not. A further 9,117 policies have a frequency claim count greater than the number of matched severity rows. The audit also identifies 1,224 policies with Exposure above 1 policy-year (maximum 2.01), nine policies with ClaimNb above 4 (maximum 16), and 20 matched severity rows above 200,000; the maximum matched claim amount is 4,075,400.56. These observations are retained in the primary analysis and examined through sensitivity diagnostics rather than removed automatically.
 
 Because the two sources do not fully reconcile, the study distinguishes:
 
@@ -280,6 +280,8 @@ The primary Poisson GLM achieves held-out mean Poisson deviance of **0.321852** 
 
 Training Pearson dispersion is **2.6058**, indicating material overdispersion.
 
+An additional exposure sensitivity caps Exposure at 1.0 policy-year while leaving the primary analysis unchanged. The capped specification produces held-out Poisson deviance of **0.321827** and O/E of **1.0065**, effectively unchanged from the primary model. This indicates that the small number of records with exposure above one policy-year does not materially drive the reported frequency results.
+
 ### Key adjusted frequency relativities
 
 | Factor | Relativity | 95% CI | p-value |
@@ -332,6 +334,7 @@ Restricting the test to policies with exact agreement between frequency count an
 | Component | Held-out metric | Aggregate O/E | Additional diagnostic |
 |---|---:|---:|---|
 | Poisson frequency | Deviance 0.321852 | 1.0065 | Dispersion 2.6058 |
+| Exposure-capped Poisson sensitivity | Deviance 0.321827 | 1.0065 | Exposure capped at 1.0 |
 | Negative Binomial sensitivity | Deviance 0.285208 | 0.9953 | Alpha 0.8596 |
 | Gamma severity | Deviance 1.884029 | 0.9893 | MAE 2,221.54 |
 | Capped-severity sensitivity | Deviance 1.189936 | 1.0157 | Cap 32,043.36 |
@@ -357,7 +360,7 @@ At the same time, the diagnostics illustrate limitations anticipated by Noll et 
 
 ## 6.3 Overdispersion
 
-The Poisson model is close to aggregate balance but clearly overdispersed. Good O/E therefore does not imply that the Poisson variance assumption is adequate. The Negative Binomial sensitivity result supports the use of more flexible count variance structures in future work.
+The Poisson model is close to aggregate balance but clearly overdispersed. Good O/E therefore does not imply that the Poisson variance assumption is adequate. The Negative Binomial sensitivity result supports the use of more flexible count variance structures in future work. By contrast, capping the small number of exposure values above one policy-year leaves Poisson deviance and aggregate calibration essentially unchanged, so those records are not a material explanation for the overdispersion finding.
 
 ## 6.4 Calibration beyond averages
 
