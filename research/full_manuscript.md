@@ -10,7 +10,7 @@ Corresponding author: ayushsanjayzode@gmail.com
 
 ## Abstract
 
-Motor-insurance pricing requires models that distinguish differences in expected claim cost across policyholders while remaining sufficiently transparent for actuarial interpretation and governance. This study evaluates an interpretable frequency–severity pricing framework using the public freMTPL2 French Motor Third-Party Liability portfolio. The analysed frequency file contains 678,013 policy records, 358,499.45 policy-years of exposure and 36,102 recorded claims. The severity source contains 26,639 positive claim rows, of which 26,444 can be matched to policy records. Claim frequency is modelled using a Poisson Generalized Linear Model (GLM) with a log link and log-exposure offset, while positive claim severity is modelled using a Gamma GLM with a log link. A common policy-level 80:20 train-test split is used to prevent claims belonging to the same policy from entering both model partitions. The frequency model is well balanced in aggregate on the held-out sample (observed-to-expected ratio 1.0065) but exhibits material overdispersion (Pearson dispersion 2.6058). Bonus-Malus is the strongest adjusted frequency signal, with relativities of 1.596, 2.249 and 5.290 for the 51–75, 76–100 and >100 bands relative to <=50. The severity model is also close to aggregate balance (observed-to-expected ratio 0.9893), but decile-level calibration is substantially weaker and the results are sensitive to extreme claims. Combined pure-premium predictions overstate matched historical loss cost, with an observed-to-expected ratio of 0.7478, although interpretation is constrained by a known inconsistency between the public frequency and severity source files. The results show that frequency–severity GLMs provide a useful and explainable actuarial baseline, but additional treatment of overdispersion, tail risk, interactions, local calibration, frequency–severity dependence and source-data reconciliation would be required before production use.
+Motor-insurance pricing requires risk differentiation that is both predictive and interpretable. This study evaluates a frequency–severity Generalized Linear Model (GLM) framework using the public freMTPL2 French Motor Third-Party Liability portfolio. The analysis uses 678,013 policy records, 358,499.45 policy-years of exposure and 36,102 recorded claims; 26,444 positive severity records can be matched to policy records. Claim frequency is modelled using a Poisson GLM with log-exposure offset, and positive claim severity using a Gamma GLM with log link, under a common policy-level 80:20 train-test split. The frequency model is well balanced on held-out data (O/E 1.0065) but materially overdispersed (Pearson dispersion 2.6058). Bonus-Malus is the strongest adjusted frequency signal, while driver age is the clearest stable severity signal. The severity model is close to aggregate balance (O/E 0.9893) but shows substantial decile-level miscalibration and sensitivity to large claims. Combined pure-premium predictions overstate matched historical loss cost (O/E 0.7478), with interpretation constrained by known frequency–severity source inconsistency. The results support GLMs as an explainable actuarial baseline rather than a production-ready tariff.
 
 **Keywords:** motor insurance pricing; generalized linear models; claim frequency; claim severity; pure premium; Poisson regression; Gamma regression; actuarial analytics; freMTPL2
 
@@ -433,13 +433,13 @@ The publication-grade pipeline is research/research_pipeline.py and generated ou
 
 No new human participants were recruited and no intervention was conducted. The analysis uses an existing public benchmark insurance dataset and does not rely on direct personal identifiers.
 
-## Competing interests
+## Competing Interest Statement
 
-The author declares no competing interests.
+Competing Interest: The author declares none.
 
-## Funding
+## Funding Statement
 
-No external funding is declared for this study.
+This work received no specific grant from any funding agency, commercial or not-for-profit sectors.
 
 ## Author contribution
 
