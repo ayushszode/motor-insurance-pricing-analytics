@@ -17,6 +17,8 @@ Generated automatically from the publication-grade research pipeline.
 - Poisson test mean deviance: **0.321852**
 - Poisson test O/E: **1.0065**
 - Poisson training Pearson dispersion: **2.6058**
+- Exposure-capped Poisson test mean deviance: **0.321827**
+- Exposure-capped Poisson test O/E: **1.0065**
 - Negative Binomial sensitivity alpha: **0.859609**
 - Negative Binomial test mean deviance: **0.285208**
 - Gamma severity test mean deviance: **1.884029**

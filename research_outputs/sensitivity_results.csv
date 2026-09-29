@@ -1,5 +1,6 @@
 analysis,metric,value,oe_ratio,note
 Poisson frequency GLM,mean_poisson_deviance,0.32185198233657125,1.0065395832445843,Primary frequency model
+Poisson exposure-capped sensitivity,mean_poisson_deviance,0.3218265015662429,1.006530298343205,Exposure capped at 1.0 policy-year; primary analysis remains uncapped
 Negative Binomial GLM sensitivity,mean_nb_deviance,0.28520777241172557,0.995298423485854,NB2 method-of-moments alpha=0.859609
 Gamma severity GLM,mean_gamma_deviance,1.884029018581402,0.9893365859386921,Primary positive-claim severity model
 Gamma severity 99.5% capped sensitivity,mean_gamma_deviance,1.1899362225243608,1.015725282367201,Training-sample cap=32043.4

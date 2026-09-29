@@ -11,6 +11,11 @@
     "test_observed_expected_ratio": 1.0065395832445843,
     "training_pearson_dispersion": 2.6058223410358234
   },
+  "frequency_exposure_cap_sensitivity": {
+    "exposure_cap": 1.0,
+    "test_mean_poisson_deviance": 0.3218265015662429,
+    "test_observed_expected_ratio": 1.006530298343205
+  },
   "frequency_negative_binomial_sensitivity": {
     "method_of_moments_alpha": 0.8596092258922534,
     "test_mean_nb_deviance": 0.28520777241172557,
