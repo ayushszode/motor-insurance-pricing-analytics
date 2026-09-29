@@ -83,15 +83,9 @@ The policy-level split prevents claims from the same policy entering both train 
 
 The data audit identified 1,224 policies with Exposure > 1 and a maximum exposure of 2.01. Because some public freMTPL2 modelling examples use exposure capping, the research pipeline has been extended to run an exposure-capped-at-1 sensitivity analysis while retaining uncapped exposure as the primary specification.
 
-The pipeline was also extended to record:
+The completed rerun shows that capping Exposure at 1.0 leaves the frequency result essentially unchanged: held-out Poisson deviance is 0.321827 versus 0.321852 in the primary model, and O/E remains 1.0065. The exposure-above-one records therefore do not materially drive the main frequency conclusions.
 
-- policies with ClaimNb > 4;
-- maximum claim count;
-- matched severity rows above 200,000;
-- maximum matched severity;
-- severity 99th and 99.5th percentiles.
-
-These are quality-control diagnostics, not automatic deletion rules.
+The extended audit also records 9 policies with ClaimNb > 4 (maximum 16), 20 matched severity rows above 200,000, a maximum matched severity of 4,075,400.56, matched severity p99 of 16,451.22 and p99.5 of 34,376.96. These are quality-control diagnostics, not automatic deletion rules.
 
 ## 5. Reference audit
 
@@ -160,8 +154,7 @@ ASTIN Bulletin is also thematically relevant, but its stated emphasis on signifi
 
 Before submission:
 
-- complete and review the new exposure/extreme-value sensitivity run;
-- update Results/Discussion only if that sensitivity materially changes interpretation;
+- exposure/extreme-value sensitivity run — completed and incorporated; it does not materially change the main frequency interpretation;
 - create publication-quality figures from the generated CSVs;
 - consecutively number displayed equations in the journal-formatted version;
 - number and caption every table and figure;
